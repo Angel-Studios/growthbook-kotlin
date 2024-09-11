@@ -129,17 +129,15 @@ android {
     }
 }
 
-val dokkaOutputDir = "$buildDir/dokka"
-
 tasks.dokkaHtml {
-    outputDirectory.set(file(dokkaOutputDir))
+    outputDirectory.set(layout.buildDirectory.file("dokka").get().asFile)
 }
 
 /**
  * This task deletes older documents
  */
 val deleteDokkaOutputDir by tasks.register<Delete>("deleteDokkaOutputDirectory") {
-    delete(dokkaOutputDir)
+    delete(tasks.dokkaHtml)
 }
 
 /**
@@ -148,7 +146,7 @@ val deleteDokkaOutputDir by tasks.register<Delete>("deleteDokkaOutputDirectory")
 val javadocJar = tasks.register<Jar>("javadocJar") {
     dependsOn(deleteDokkaOutputDir, tasks.dokkaHtml)
     archiveClassifier.set("javadoc")
-    from(dokkaOutputDir)
+    from(tasks.dokkaHtml)
 }
 
 val sonatypeUsername: String? = System.getenv("GB_SONATYPE_USERNAME")
