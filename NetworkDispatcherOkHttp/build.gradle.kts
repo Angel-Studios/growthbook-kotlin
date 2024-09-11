@@ -29,8 +29,7 @@ kotlin {
                 api("com.squareup.okhttp3:okhttp:$okhttpVersion")
                 implementation("com.squareup.okhttp3:okhttp-sse:$okhttpVersion")
 
-                // implementation("io.growthbook.sdk:Core:1.0.1")
-                implementation(project(":Core"))
+                implementation(projects.core)
             }
         }
         val androidMain by getting {
