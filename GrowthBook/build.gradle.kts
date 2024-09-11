@@ -50,7 +50,6 @@ kotlin {
                 implementation("com.ionspin.kotlin:bignum:0.3.3")
                 implementation("com.soywiz.korlibs.krypto:krypto:$kryptoVersion")
 
-                // api("io.growthbook.sdk:Core:1.0.0")
                 api(projects.core)
                 api(
                     "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"

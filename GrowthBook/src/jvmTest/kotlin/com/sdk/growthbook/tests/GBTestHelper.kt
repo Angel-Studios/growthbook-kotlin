@@ -20,7 +20,7 @@ class GBTestHelper {
 
         init {
             val usrDir = System.getProperty("user.dir")
-            val pathToFile = "$usrDir/src/commonTest/kotlin/com/sdk/growthbook/tests/cases.json"
+            val pathToFile = "$usrDir/src/jvmTest/kotlin/com/sdk/growthbook/tests/cases.json"
             val casesJsonFile = File(pathToFile)
 
             testData = jsonParser.decodeFromString(
