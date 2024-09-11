@@ -14,7 +14,11 @@ kotlin {
         publishLibraryVariants("release")
     }
 
-    jvm()
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "21"
+        }
+    }
 
     sourceSets {
         val okhttpVersion = "4.9.2"
@@ -55,6 +59,10 @@ android {
         debug {
             isMinifyEnabled = false
         }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 

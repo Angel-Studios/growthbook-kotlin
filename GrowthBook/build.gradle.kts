@@ -36,7 +36,11 @@ kotlin {
         }
     }
 
-    jvm()
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "21"
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -119,6 +123,10 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 

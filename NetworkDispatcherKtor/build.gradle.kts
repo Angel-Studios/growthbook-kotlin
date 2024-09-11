@@ -31,7 +31,11 @@ kotlin {
         }
     }
 
-    jvm()
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "21"
+        }
+    }
 
     val ktorVersion = "2.1.2"
     sourceSets {
@@ -73,6 +77,10 @@ android {
         debug {
             isMinifyEnabled = false
         }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
