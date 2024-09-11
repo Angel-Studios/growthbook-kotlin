@@ -1,33 +1,30 @@
 package com.sdk.growthbook.network
 
-// import java.net.UnknownHostException
-// import java.util.concurrent.TimeoutException
-import com.sdk.growthbook.utils.Resource
-import kotlinx.coroutines.Job
-import io.ktor.client.HttpClient
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
-import kotlinx.coroutines.CoroutineScope
 import com.sdk.growthbook.PlatformDependentIODispatcher
-import kotlinx.coroutines.launch
-import io.ktor.client.request.get
-import io.ktor.client.request.post
-import io.ktor.client.request.prepareGet
+import com.sdk.growthbook.utils.Resource
+import com.sdk.growthbook.utils.readSse
+import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.statement.HttpStatement
-import io.ktor.client.request.headers
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
-import kotlinx.coroutines.flow.callbackFlow
-import io.ktor.utils.io.ByteReadChannel
-import com.sdk.growthbook.utils.readSse
-import kotlinx.coroutines.channels.awaitClose
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.get
+import io.ktor.client.request.headers
+import io.ktor.client.request.post
+import io.ktor.client.request.prepareGet
+import io.ktor.client.statement.HttpStatement
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.ByteReadChannel
 import io.ktor.utils.io.errors.IOException
-// import javax.net.ssl.SSLHandshakeException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 
 internal fun createDefaultHttpClient(): HttpClient =
     HttpClient {
@@ -68,16 +65,10 @@ class GBNetworkDispatcherKtor(
                 } catch (exception: Exception) {
                     onError(exception)
                 }
-            // } catch (unknownHostException: UnknownHostException) {
-            //     onError(unknownHostException)
             } catch (clientRequestException: ClientRequestException) {
                 onError(clientRequestException)
             } catch (serverResponseException: ServerResponseException) {
                 onError(serverResponseException)
-            // } catch (timeoutException: TimeoutException) {
-            //     onError(timeoutException)
-            // } catch (sslHandshakeException: SSLHandshakeException) {
-            //     onError(sslHandshakeException)
             } catch (ioException: IOException) {
                 onError(ioException)
             } catch (exception: Exception) { // for the case if something was missed
