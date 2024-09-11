@@ -144,6 +144,7 @@ publishing {
  * Signing JAR using GPG Keys
  */
 signing {
+    isRequired = System.getenv("CI") == "true"
     useInMemoryPgpKeys(
         System.getenv("GPG_PRIVATE_KEY"),
         System.getenv("GPG_PRIVATE_PASSWORD")
