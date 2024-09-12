@@ -1,18 +1,3 @@
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:8.5.2")
-
-        val kotlinVersion = "1.9.24"
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        classpath ("org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion")
-    }
-}
-
 allprojects {
     repositories {
         google()
@@ -22,5 +7,8 @@ allprojects {
 }
 
 plugins {
-    id("org.jetbrains.kotlinx.kover") version "0.5.0"
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kover)
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
 }
