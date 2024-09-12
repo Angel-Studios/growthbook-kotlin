@@ -3,7 +3,7 @@ plugins {
     id("com.android.library")
     id("maven-publish")
     id("signing")
-    id("org.jetbrains.dokka") version "1.8.10"
+    alias(libs.plugins.dokka)
 }
 
 group = "io.growthbook.sdk"
@@ -16,41 +16,37 @@ kotlin {
 
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "21"
+            kotlinOptions.jvmTarget = libs.versions.jvmTarget.get()
         }
     }
 
     sourceSets {
-        val okhttpVersion = "4.9.2"
-
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-                api("com.squareup.okhttp3:okhttp:$okhttpVersion")
-                implementation("com.squareup.okhttp3:okhttp-sse:$okhttpVersion")
-
+                implementation(libs.kotlin.coroutines)
+                implementation(libs.okhttp)
+                implementation(libs.okhttp.sse)
                 implementation(projects.core)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
+                implementation(libs.okhttp)
             }
         }
         val androidUnitTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                // implementation("com.squareup.okhttp3:mockwebserver:$okhttpVersion")
             }
         }
     }
 }
 
 android {
-    compileSdk = 34
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     namespace = "com.sdk.growthbook.okhttp_network_dispatcher"
     defaultConfig {
-        minSdk = 21
+        minSdk = libs.versions.android.minSdk.get().toInt()
     }
     buildTypes {
         release {
@@ -86,9 +82,6 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
     from(tasks.dokkaHtml)
 }
 
-val sonatypeUsername: String? = System.getenv("GB_SONATYPE_USERNAME")
-val sonatypePassword: String? = System.getenv("GB_SONATYPE_PASSWORD")
-
 /**
  * Publishing Task for MavenCentral
  */
@@ -100,8 +93,8 @@ publishing {
             val snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
             url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
             credentials {
-                username = sonatypeUsername
-                password = sonatypePassword
+                username = System.getenv("GB_SONATYPE_USERNAME")
+                password = System.getenv("GB_SONATYPE_PASSWORD")
             }
         }
     }

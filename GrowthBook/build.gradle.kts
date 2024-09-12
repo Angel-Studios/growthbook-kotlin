@@ -7,18 +7,13 @@ plugins {
     kotlin("plugin.serialization")
     id("maven-publish")
     id("signing")
-    id("org.jetbrains.dokka") version "1.8.10"
+    alias(libs.plugins.dokka)
 }
 
 group = "io.growthbook.sdk"
 version = "1.1.61"
 
 kotlin {
-
-    val ktorVersion = "2.1.2"
-    val serializationVersion = "1.3.3"
-    val kryptoVersion = "2.7.0"
-
     androidTarget {
         publishLibraryVariants("release")
     }
@@ -38,59 +33,54 @@ kotlin {
 
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "21"
+            kotlinOptions.jvmTarget = libs.versions.jvmTarget.get()
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-                implementation("com.ionspin.kotlin:bignum:0.3.3")
-                implementation("com.soywiz.korlibs.krypto:krypto:$kryptoVersion")
+                implementation(libs.kotlin.stdlib)
+                implementation(libs.kotlin.coroutines)
+                implementation(libs.bignum)
+                implementation(libs.krypto)
+                implementation(libs.kotlin.serialization.json)
 
                 api(projects.core)
-                api(
-                    "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"
-                )
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-                implementation(
-                    "org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion"
-                )
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+                implementation(libs.kotlin.serialization.json)
+                implementation(libs.ktor.json)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("androidx.startup:startup-runtime:1.1.1")
-                implementation("com.soywiz.korlibs.krypto:krypto-android:$kryptoVersion")
+                implementation(libs.androidx.startup)
+                implementation(libs.krypto.android)
             }
         }
         val androidUnitTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
+                implementation(libs.junit)
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-                implementation("io.ktor:ktor-client-mock:$ktorVersion")
+                implementation(libs.ktor.client.mock)
             }
         }
 
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-java:$ktorVersion")
-                implementation("com.soywiz.korlibs.krypto:krypto-jvm:$kryptoVersion")
+                implementation(libs.ktor.client.java)
+                implementation(libs.krypto.jvm)
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation ("org.jetbrains.kotlin:kotlin-test-junit")
-                implementation("com.soywiz.korlibs.krypto:krypto-jvm:$kryptoVersion")
+                implementation("org.jetbrains.kotlin:kotlin-test-junit")
             }
         }
 
@@ -99,11 +89,11 @@ kotlin {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     namespace = "com.sdk.growthbook"
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 21
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -149,9 +139,6 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
     from(tasks.dokkaHtml)
 }
 
-val sonatypeUsername: String? = System.getenv("GB_SONATYPE_USERNAME")
-val sonatypePassword: String? = System.getenv("GB_SONATYPE_PASSWORD")
-
 /**
  * Publishing Task for MavenCentral
  */
@@ -163,8 +150,8 @@ publishing {
             val snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
             url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
             credentials {
-                username = sonatypeUsername
-                password = sonatypePassword
+                username = System.getenv("GB_SONATYPE_USERNAME")
+                password = System.getenv("GB_SONATYPE_PASSWORD")
             }
         }
     }

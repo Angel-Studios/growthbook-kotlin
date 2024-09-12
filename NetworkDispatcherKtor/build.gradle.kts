@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.serialization")
     id("maven-publish")
     id("signing")
-    id("org.jetbrains.dokka") version "1.8.10"
+    alias(libs.plugins.dokka)
 }
 
 group = "io.growthbook.sdk"
@@ -33,7 +33,7 @@ kotlin {
 
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "21"
+            kotlinOptions.jvmTarget = libs.versions.jvmTarget.get()
         }
     }
 
@@ -41,34 +41,32 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-
-                api("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-
+                implementation(libs.kotlin.coroutines)
+                implementation(libs.ktor.client)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.json)
                 implementation(projects.core)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
+                implementation(libs.ktor.client.android)
             }
         }
         val androidUnitTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("io.ktor:ktor-client-mock:$ktorVersion")
+                implementation(libs.ktor.client.mock)
             }
         }
     }
 }
 
 android {
-    compileSdk = 34
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     namespace = "com.sdk.growthbook.default_network_dispatcher"
     defaultConfig {
-        minSdk = 21
+        minSdk = libs.versions.android.minSdk.get().toInt()
     }
     buildTypes {
         release {
@@ -104,9 +102,6 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
     from(tasks.dokkaHtml)
 }
 
-val sonatypeUsername: String? = System.getenv("GB_SONATYPE_USERNAME")
-val sonatypePassword: String? = System.getenv("GB_SONATYPE_PASSWORD")
-
 /**
  * Publishing Task for MavenCentral
  */
@@ -118,8 +113,8 @@ publishing {
             val snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
             url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
             credentials {
-                username = sonatypeUsername
-                password = sonatypePassword
+                username = System.getenv("GB_SONATYPE_USERNAME")
+                password = System.getenv("GB_SONATYPE_PASSWORD")
             }
         }
     }
