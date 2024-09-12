@@ -1,5 +1,8 @@
 package com.sdk.growthbook.features
 
+import com.sdk.growthbook.sandbox.CachingImpl
+import com.sdk.growthbook.sandbox.getData
+import com.sdk.growthbook.sandbox.putData
 import com.sdk.growthbook.utils.Constants
 import com.sdk.growthbook.utils.DefaultCrypto
 import com.sdk.growthbook.utils.GBError
@@ -7,9 +10,6 @@ import com.sdk.growthbook.utils.GBFeatures
 import com.sdk.growthbook.utils.GBRemoteEvalParams
 import com.sdk.growthbook.utils.Resource
 import com.sdk.growthbook.utils.getFeaturesFromEncryptedFeatures
-import com.sdk.growthbook.sandbox.CachingImpl
-import com.sdk.growthbook.sandbox.getData
-import com.sdk.growthbook.sandbox.putData
 import com.sdk.growthbook.utils.getSavedGroupFromEncryptedSavedGroup
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonObject
@@ -176,7 +176,7 @@ internal class FeaturesViewModel(
                         isRemote = true
                     )
                 } else {
-                    if (encryptedSavedGroups != null && encryptionKey != null) {
+                    if (encryptedSavedGroups != null) {
                         if (encryptionKey.isNotEmpty()) {
                             val crypto = DefaultCrypto()
                             savedGroups =

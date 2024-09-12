@@ -540,7 +540,7 @@ internal class GBConditionEvaluator {
                 // than or equal the second version
                 "\$vlte" -> return paddedVersionSource <= paddedVersionTarget
                 "\$inGroup" -> {
-                    if (attributeValue != null && conditionValue != null) {
+                    if (attributeValue != null) {
                         return isIn(attributeValue, savedGroups?.get(conditionValue.content)?.jsonArray ?: JsonArray(
                             emptyList()
                         )
@@ -548,7 +548,7 @@ internal class GBConditionEvaluator {
                     }
                 }
                 "\$notInGroup" -> {
-                    if (attributeValue != null && conditionValue != null) {
+                    if (attributeValue != null) {
                         return !isIn(attributeValue, savedGroups?.get(conditionValue.content)?.jsonArray ?: JsonArray(
                             emptyList()
                         )
