@@ -31,7 +31,11 @@ kotlin {
         }
     }
 
-    jvm()
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = libs.versions.jvmTarget.get()
+        }
+    }
 
     val ktorVersion = "2.1.2"
     sourceSets {

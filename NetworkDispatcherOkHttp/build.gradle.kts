@@ -14,7 +14,11 @@ kotlin {
         publishLibraryVariants("release")
     }
 
-    jvm()
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = libs.versions.jvmTarget.get()
+        }
+    }
 
     sourceSets {
         val commonMain by getting {
