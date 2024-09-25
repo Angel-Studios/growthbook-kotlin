@@ -1,7 +1,7 @@
 [versions]
 android-buildTools = "34.0.0"
 android-compileSdk = "34"
-android-minSdk = "34"
+android-minSdk = "21"
 android-gradlePlugin = "8.5.2"
 android-startup = "1.1.1"
 android-targetSdk = "34"
