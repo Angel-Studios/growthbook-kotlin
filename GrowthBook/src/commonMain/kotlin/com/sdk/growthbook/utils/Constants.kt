@@ -87,12 +87,14 @@ class GBError(error: Throwable?) {
     /**
      * Error Message for the caught error / exception
      */
-    private lateinit var errorMessage: String
+    lateinit var errorMessage: String
+        private set
 
     /**
      * Error Stacktrace for the caught error / exception
      */
-    private lateinit var stackTrace: String
+    lateinit var stackTrace: String
+        private set
 
     /**
      * Constructor for initializing
