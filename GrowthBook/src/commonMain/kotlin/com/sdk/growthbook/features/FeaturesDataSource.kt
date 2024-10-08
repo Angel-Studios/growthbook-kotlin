@@ -90,8 +90,6 @@ internal class FeaturesDataSource(private val dispatcher: NetworkDispatcher) {
             payload["forcedVariations"] = params.forcedVariations
         }
 
-        println(payload)
-
         /**
          * Make POST request to server and send feature for further evaluation
          */

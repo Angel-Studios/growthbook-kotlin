@@ -134,11 +134,9 @@ class GBNetworkDispatcherKtor(
                     }
                     contentType(ContentType.Application.Json)
                     //setBody(bodyParams.toJsonElement())
-                    println("body = $body")
                 }
                 onSuccess(response.body())
             } catch (e: Exception) {
-                println("exception $e")
                 onError(e)
             }
         }

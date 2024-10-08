@@ -135,7 +135,6 @@ internal class GBExperimentEvaluator {
                         context = context
                     )
                 ) {
-                    print("Skip because of filters")
                     return getExperimentResult(
                         featureId = featureId,
                         gbContext = context,
@@ -224,7 +223,6 @@ internal class GBExperimentEvaluator {
                      * blocking prerequisite eval failed: feature evaluation fails
                      */
                     if (!evalCondition) {
-                        print("Feature blocked by prerequisite")
                         return getExperimentResult(
                             featureId = featureId,
                             experiment = experiment,
@@ -247,7 +245,6 @@ internal class GBExperimentEvaluator {
             seed = experiment.seed ?: experiment.key
         )
         if (hash == null) {
-            print("Skip because of invalid hash version")
             return getExperimentResult(
                 featureId = featureId,
                 experiment = experiment,
@@ -271,7 +268,6 @@ internal class GBExperimentEvaluator {
          * 12. Unenroll if any prior sticky buckets are blocked by version
          */
         if (stickyBucketVersionIsBlocked) {
-            print("Skip because sticky bucket version is blocked")
             return getExperimentResult(
                 featureId = featureId,
                 experiment = experiment,
@@ -289,7 +285,6 @@ internal class GBExperimentEvaluator {
          * return immediately (not in experiment, variationId 0)
          */
         if (assigned < 0) {
-            print("Skip because of coverage")
             return getExperimentResult(
                 featureId = featureId,
                 experiment = experiment,
@@ -343,7 +338,6 @@ internal class GBExperimentEvaluator {
             bucket = hash,
             attributeOverrides = attributeOverrides
         )
-        print("ExperimentResult: $result")
 
         /**
          * 17. Persist sticky bucket
