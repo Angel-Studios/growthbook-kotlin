@@ -2,19 +2,19 @@ package com.sdk.growthbook.tests
 
 import com.sdk.growthbook.utils.Constants
 import com.sdk.growthbook.utils.GBBucketRange
-import com.sdk.growthbook.utils.GBNameSpace
 import com.sdk.growthbook.utils.GBUtils
 import com.sdk.growthbook.utils.toJsonElement
 import com.sdk.growthbook.utils.toList
+import kotlin.math.roundToInt
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.float
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
-import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 class GBUtilsTests {
 
@@ -35,7 +35,7 @@ class GBUtilsTests {
 
                 val status =
                     item[0].toString() + "\nExpected Result - " + item[1].toString() +
-                        "\nActual result - " + result + "\n"
+                            "\nActual result - " + result + "\n"
 
                 if (experiment == result.toString()) {
                     passedScenarios.add(status)
@@ -68,7 +68,7 @@ class GBUtilsTests {
                 if (item[1].jsonArray[2] != JsonNull) {
                     weights =
                         (item[1].jsonArray[2].jsonArray.toList() as? List<String>
-                            )?.map { value -> value.toFloat() }
+                                )?.map { value -> value.toFloat() }
                 }
 
                 val bucketRange = GBUtils.getBucketRanges(
@@ -79,8 +79,8 @@ class GBUtilsTests {
 
                 val status =
                     item[0].toString() + "\nExpected Result - " + item[2].jsonArray.toString() +
-                        "\nActual result - " +
-                        bucketRange.toJsonElement().jsonArray.toString() + "\n"
+                            "\nActual result - " +
+                            bucketRange.toJsonElement().jsonArray.toString() + "\n"
 
                 if (compareBucket(item[2].jsonArray.toList() as List<List<Float>>, bucketRange)) {
                     passedScenarios.add(status)
@@ -155,7 +155,7 @@ class GBUtilsTests {
 
                 val status =
                     item[0].toString() + "\nExpected Result - " + item[3].toString() +
-                        "\nActual result - " + result.toString() + "\n"
+                            "\nActual result - " + result.toString() + "\n"
 
                 if (item[3].toString() == result.toString()) {
                     passedScenarios.add(status)
@@ -190,7 +190,7 @@ class GBUtilsTests {
 
                 val status =
                     item[0].toString() + "\nExpected Result - " + item[3].toString() +
-                        "\nActual result - " + result + "\n"
+                            "\nActual result - " + result + "\n"
 
 
                 if (item[3].toString() == result.toString()) {
@@ -231,8 +231,9 @@ class GBUtilsTests {
                     resultTest = false
                 } else {
                     for (i in 0..result.size - 1) {
-                        val source = item[1].jsonArray[i].jsonPrimitive.float
-                        val target = result[i]
+                        // Multiply out floats to 6 digits to avoid platform specific issues with float comparisons
+                        val source = (item[1].jsonArray[i].jsonPrimitive.float * 100_000f).roundToInt()
+                        val target = (result[i] * 100_000).roundToInt()
 
                         if (source != target) {
                             resultTest = false
@@ -264,7 +265,7 @@ class GBUtilsTests {
         GBUtils()
         Constants()
 
-        assertFalse(GBUtils.inNamespace("4242", GBNameSpace("", 0F, 0F)))
+        assertFalse(GBUtils.inNamespace("4242", Triple("", 0F, 0F)))
 
         val items = ArrayList<JsonPrimitive>()
         items.add(JsonPrimitive(1))

@@ -1,8 +1,9 @@
 package com.sdk.growthbook.tests
 
-import com.sdk.growthbook.utils.GBCondition
 import com.sdk.growthbook.evaluators.GBAttributeType
 import com.sdk.growthbook.evaluators.GBConditionEvaluator
+import com.sdk.growthbook.utils.GBCondition
+import kotlin.test.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
@@ -10,7 +11,6 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 import org.intellij.lang.annotations.Language
-import kotlin.test.*
 
 class GBConditionTests {
 
@@ -37,7 +37,7 @@ class GBConditionTests {
 
                 val status =
                     item[0].toString() + "\nExpected Result - " + item[3] +
-                        "\nActual result - " + result + "\n\n"
+                            "\nActual result - " + result + "\n\n"
 
                 if (item[3].toString() == result.toString()) {
                     passedScenarios.add(status)

@@ -50,9 +50,23 @@ fun encryptToFeaturesDataModel(string: String): GBFeatures? {
             string = string
         )
         result
-    } catch (e: Exception) {
+    } catch (_: Exception) {
         null
     }
+}
+
+private fun decryptString(
+    encryptedString: String,
+    encryptionKey: String,
+    subtleCrypto: Crypto? = null,
+): String {
+    val encryptedArrayData = encryptedString.split(".")
+    val iv = decodeBase64(encryptedArrayData[0])
+    val key = decodeBase64(encryptionKey)
+    val stringToDecrypt = decodeBase64(encryptedArrayData[1])
+    val cryptoLocal = subtleCrypto ?: DefaultCrypto()
+    val encrypt: ByteArray = cryptoLocal.decrypt(stringToDecrypt, key, iv)
+    return encrypt.decodeToString()
 }
 
 fun getFeaturesFromEncryptedFeatures(
@@ -60,17 +74,7 @@ fun getFeaturesFromEncryptedFeatures(
     encryptionKey: String,
     subtleCrypto: Crypto? = null,
 ): GBFeatures? {
-    val encryptedArrayData = encryptedString.split(".")
-
-    val iv = decodeBase64(encryptedArrayData[0])
-    val key = decodeBase64(encryptionKey)
-    val stringToDecrypt = decodeBase64(encryptedArrayData[1])
-
-    val cryptoLocal = subtleCrypto ?: DefaultCrypto()
-
-    val encrypt: ByteArray = cryptoLocal.decrypt(stringToDecrypt, key, iv)
-    val encryptString: String =
-        encrypt.decodeToString()
+    val encryptString = decryptString(encryptedString, encryptionKey, subtleCrypto)
     return encryptToFeaturesDataModel(encryptString)
 }
 
@@ -79,21 +83,10 @@ fun getSavedGroupFromEncryptedSavedGroup(
     encryptionKey: String,
     subtleCrypto: Crypto? = null,
 ): JsonObject? {
-    val encryptedArrayData = encryptedString.split(".")
-
-    val iv = decodeBase64(encryptedArrayData[0])
-    val key = decodeBase64(encryptionKey)
-    val stringToDecrypt = decodeBase64(encryptedArrayData[1])
-
-    val cryptoLocal = subtleCrypto ?: DefaultCrypto()
-
-    val encrypt: ByteArray = cryptoLocal.decrypt(stringToDecrypt, key, iv)
-    val encryptString: String =
-        encrypt.decodeToString()
-
+    val encryptString = decryptString(encryptedString, encryptionKey, subtleCrypto)
     return try {
         Json.decodeFromString(JsonObject.serializer(), encryptString)
-    } catch (e : Exception) {
+    } catch (_: Exception) {
         null
     }
 }

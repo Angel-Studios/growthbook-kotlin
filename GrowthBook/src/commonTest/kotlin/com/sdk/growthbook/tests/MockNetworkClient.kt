@@ -14,7 +14,7 @@ class MockNetworkClient(
         request: String,
         onSuccess: (String) -> Unit,
         onError: (Throwable) -> Unit
-    ): Job{
+    ): Job {
 
         try {
             if (successResponse != null) {

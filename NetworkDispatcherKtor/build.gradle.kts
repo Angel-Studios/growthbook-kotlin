@@ -19,7 +19,6 @@ kotlin {
     }
 
     js {
-        yarn.lockFileDirectory = file("kotlin-js-store")
         browser {
             commonWebpackConfig {
                 output = KotlinWebpackOutput(

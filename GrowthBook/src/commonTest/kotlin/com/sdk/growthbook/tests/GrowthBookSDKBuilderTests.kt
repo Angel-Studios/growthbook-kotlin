@@ -2,13 +2,13 @@ package com.sdk.growthbook.tests
 
 import com.sdk.growthbook.GBSDKBuilder
 import com.sdk.growthbook.GrowthBookSDK
-import com.sdk.growthbook.utils.GBCacheRefreshHandler
-import com.sdk.growthbook.utils.GBError
-import com.sdk.growthbook.utils.GBFeatures
 import com.sdk.growthbook.model.GBExperiment
 import com.sdk.growthbook.model.GBExperimentResult
 import com.sdk.growthbook.model.GBFeatureSource
 import com.sdk.growthbook.stickybucket.GBStickyBucketServiceImp
+import com.sdk.growthbook.utils.GBCacheRefreshHandler
+import com.sdk.growthbook.utils.GBError
+import com.sdk.growthbook.utils.GBFeatures
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -125,7 +125,7 @@ class GrowthBookSDKBuilderTests {
     fun testSDKFeaturesData() {
 
         var isRefreshed = false
-        val gbError = GBError(error = null)
+        GBError(error = null)
         val gbCacheRefreshHandler: GBCacheRefreshHandler = { _, _ -> }
 
         val sdkInstance = GBSDKBuilder(

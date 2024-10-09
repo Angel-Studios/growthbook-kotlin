@@ -2,16 +2,17 @@ package com.sdk.growthbook.tests
 
 import com.sdk.growthbook.GBSDKBuilder
 import com.sdk.growthbook.GrowthBookSDK
-import com.sdk.growthbook.utils.toHashMap
 import com.sdk.growthbook.evaluators.GBFeatureEvaluator
 import com.sdk.growthbook.model.GBContext
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import com.sdk.growthbook.utils.toHashMap
+import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 
 class GBFeatureValueTests {
 
@@ -43,9 +44,11 @@ class GBFeatureValueTests {
                 val gbContext = GBContext(
                     apiKey = "", hostURL = "",
                     enabled = true, attributes = attributes, forcedVariations = HashMap(),
-                    qaMode = false, trackingCallback = { _, _ ->
+                    qaMode = false,
+                    trackingCallback = { _, _ ->
 
-                    }, encryptionKey = "",
+                    },
+                    encryptionKey = "",
                 )
                 if (testData.features != null) {
                     gbContext.features = testData.features
@@ -72,20 +75,20 @@ class GBFeatureValueTests {
                     )
 
                 val status = item[0].toString() +
-                    "\nExpected Result - " +
-                    "\nValue - " + expectedResult.value.content +
-                    "\nOn - " + expectedResult.on.toString() +
-                    "\nOff - " + expectedResult.off.toString() +
-                    "\nSource - " + expectedResult.source +
-                    "\nExperiment - " + expectedResult.experiment?.key +
-                    "\nExperiment Result - " + expectedResult.experimentResult?.variationId +
-                    "\nActual result - " +
-                    "\nValue - " + result.value.toString() +
-                    "\nOn - " + result.on.toString() +
-                    "\nOff - " + result.off.toString() +
-                    "\nSource - " + result.source +
-                    "\nExperiment - " + result.experiment?.key +
-                    "\nExperiment Result - " + result.experimentResult?.variationId + "\n\n"
+                        "\nExpected Result - " +
+                        "\nValue - " + expectedResult.value.content +
+                        "\nOn - " + expectedResult.on.toString() +
+                        "\nOff - " + expectedResult.off.toString() +
+                        "\nSource - " + expectedResult.source +
+                        "\nExperiment - " + expectedResult.experiment?.key +
+                        "\nExperiment Result - " + expectedResult.experimentResult?.variationId +
+                        "\nActual result - " +
+                        "\nValue - " + result.value.toString() +
+                        "\nOn - " + result.on.toString() +
+                        "\nOff - " + result.off.toString() +
+                        "\nSource - " + result.source +
+                        "\nExperiment - " + result.experiment?.key +
+                        "\nExperiment Result - " + result.experimentResult?.variationId + "\n\n"
 
                 if (result.value.toString() == expectedResult.value.content &&
                     result.on.toString() == expectedResult.on.toString() &&
@@ -110,6 +113,7 @@ class GBFeatureValueTests {
         assertTrue(failedScenarios.size == 0)
     }
 
+    @JsName("whether_featureUsageCallback_is_called")
     @Test
     fun `whether featureUsageCallback is called`() {
         val expectedNumberOfOnFeatureUsageCalls = 1
@@ -142,6 +146,7 @@ class GBFeatureValueTests {
         assertEquals(expectedNumberOfOnFeatureUsageCalls, actualNumberOfOnFeatureUsageCalls)
     }
 
+    @JsName("whether_featureUsageCallback_is_called_on_context_level")
     @Test
     fun `whether featureUsageCallback is called on context level`() {
         val expectedNumberOfOnFeatureUsageCalls = 1

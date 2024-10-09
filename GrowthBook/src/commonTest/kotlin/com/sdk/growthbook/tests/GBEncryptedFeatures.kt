@@ -4,9 +4,10 @@ import com.sdk.growthbook.GBSDKBuilder
 import com.sdk.growthbook.utils.DefaultCrypto
 import com.sdk.growthbook.utils.encryptToFeaturesDataModel
 import com.soywiz.krypto.encoding.Base64
-import kotlinx.serialization.json.JsonArray
+import io.ktor.utils.io.core.toByteArray
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlinx.serialization.json.JsonArray
 
 class GBEncryptedFeatures {
 
@@ -36,8 +37,8 @@ class GBEncryptedFeatures {
                 decodedIv
             )
             println(stringForEncrypt)
-            println(String(decryptedValue))
-            assertEquals(stringForEncrypt, String(decryptedValue))
+            println(decryptedValue.decodeToString())
+            assertEquals(stringForEncrypt, decryptedValue.decodeToString())
         }
     }
 
@@ -56,7 +57,7 @@ class GBEncryptedFeatures {
             encryptionKey = "",
             trackingCallback = { _, _ -> },
             networkDispatcher = MockNetworkClient(null, null),
-            ).initialize()
+        ).initialize()
 
         val keyString = "Ns04T5n9+59rl2x3SlNHtQ=="
         val encryptedFeatures =
