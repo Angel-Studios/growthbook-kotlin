@@ -1,6 +1,5 @@
 package com.sdk.growthbook.integration
 
-import kotlin.js.JsExport
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertTrue
