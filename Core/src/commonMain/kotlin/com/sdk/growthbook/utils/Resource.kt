@@ -13,5 +13,5 @@ sealed class Resource<out R> {
     /**
      * Failed child of wrapper
      */
-    data class Error(val exception: Exception) : Resource<Nothing>()
+    data class Error(val exception: Throwable) : Resource<Nothing>()
 }

@@ -17,7 +17,7 @@ class GBEventSourceListener(private val handler: GBEventSourceHandler): EventSou
         try {
             handler.onFeaturesResponse(data)
         } catch (e: Exception) {
-            println(e)
+            handler.onError(e)
         }
     }
 }
