@@ -1,8 +1,9 @@
 package com.sdk.growthbook.integration
 
-import org.intellij.lang.annotations.Language
-import org.junit.Test
+import kotlin.js.JsName
+import kotlin.test.Test
 import kotlin.test.assertTrue
+import org.intellij.lang.annotations.Language
 
 class IntegrationTests {
 
@@ -44,6 +45,7 @@ class IntegrationTests {
         )
     }
 
+    @JsName("gBExperimentResult_name_should_not_be_null")
     @Test
     fun `gBExperimentResult name should not be null`() {
         @Language("json")

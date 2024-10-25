@@ -1,18 +1,18 @@
 package com.sdk.growthbook.tests
 
 import com.sdk.growthbook.GrowthBookSDK
-import com.sdk.growthbook.utils.GBError
-import com.sdk.growthbook.utils.GBFeatures
-import com.sdk.growthbook.utils.GBRemoteEvalParams
 import com.sdk.growthbook.features.FeaturesDataModel
 import com.sdk.growthbook.features.FeaturesDataSource
 import com.sdk.growthbook.features.FeaturesFlowDelegate
 import com.sdk.growthbook.features.FeaturesViewModel
 import com.sdk.growthbook.model.GBContext
-import kotlinx.serialization.json.JsonObject
+import com.sdk.growthbook.utils.GBError
+import com.sdk.growthbook.utils.GBFeatures
+import com.sdk.growthbook.utils.GBRemoteEvalParams
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
+import kotlinx.serialization.json.JsonObject
 
 class FeaturesViewModelTests : FeaturesFlowDelegate {
 
@@ -25,7 +25,8 @@ class FeaturesViewModelTests : FeaturesFlowDelegate {
         GrowthBookSDK.gbContext = GBContext(
             "Key", hostURL = "https://example.com",
             enabled = true, attributes = HashMap(), forcedVariations = HashMap(),
-            qaMode = false, trackingCallback = { _, _ ->
+            qaMode = false,
+            trackingCallback = { _, _ ->
 
             },
             encryptionKey = null,

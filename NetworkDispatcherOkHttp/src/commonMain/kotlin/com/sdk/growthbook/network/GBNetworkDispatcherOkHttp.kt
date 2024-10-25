@@ -129,6 +129,10 @@ class GBNetworkDispatcherOkHttp(
                             eventSource?.cancel()
                             cancel()
                         }
+
+                        override fun onError(error: Throwable) {
+                            trySend(Resource.Error(error))
+                        }
                         override fun onFeaturesResponse(featuresJsonResponse: String?) {
                             featuresJsonResponse?.let {
                                 trySend(Resource.Success(it))

@@ -1,3 +1,39 @@
+@file:Suppress("SpellCheckingInspection")
+
+package com.sdk.growthbook
+
+// There is no good way to escape dollar signs in multiline strings and
+// reading a file properly across n platforms in tests is also not great
+private const val all = "\$all"
+private const val not = "\$not"
+private const val and = "\$and"
+private const val or = "\$or"
+private const val eq = "\$eq"
+private const val gt = "\$gt"
+private const val gte = "\$gte"
+private const val lt = "\$lt"
+private const val lte = "\$lte"
+private const val ne = "\$ne"
+private const val isIn = "\$in" // "in" is a reserved word in kotlin
+private const val nin = "\$nin"
+private const val nor = "\$nor"
+private const val vgt = "\$vgt"
+private const val vgte = "\$vgte"
+private const val vlt = "\$vlt"
+private const val vlte = "\$vlte"
+private const val veq = "\$veq"
+private const val vne = "\$vne"
+private const val inGroup = "\$inGroup"
+private const val notInGroup = "\$notInGroup"
+private const val groups = "\$groups"
+private const val regex = "\$regex"
+private const val regx = "\$regx"
+private const val exists = "\$exists"
+private const val elemMatch = "\$elemMatch"
+private const val type = "\$type"
+private const val size = "\$size"
+
+val casesJson = """
 {
   "specVersion": "0.7.0",
   "evalCondition": [
@@ -386,10 +422,10 @@
       true
     ],
     [
-      "$in - pass",
+      "$isIn - pass",
       {
         "num": {
-          "$in": [1, 2, 3]
+          "$isIn": [1, 2, 3]
         }
       },
       {
@@ -398,10 +434,10 @@
       true
     ],
     [
-      "$in - fail",
+      "$isIn - fail",
       {
         "num": {
-          "$in": [1, 2, 3]
+          "$isIn": [1, 2, 3]
         }
       },
       {
@@ -410,10 +446,10 @@
       false
     ],
     [
-      "$in - not array",
+      "$isIn - not array",
       {
         "num": {
-          "$in": 1
+          "$isIn": 1
         }
       },
       {
@@ -422,10 +458,10 @@
       false
     ],
     [
-      "$in - array pass 1",
+      "$isIn - array pass 1",
       {
         "tags": {
-          "$in": ["a", "b"]
+          "$isIn": ["a", "b"]
         }
       },
       {
@@ -434,10 +470,10 @@
       true
     ],
     [
-      "$in - array pass 2",
+      "$isIn - array pass 2",
       {
         "tags": {
-          "$in": ["a", "b"]
+          "$isIn": ["a", "b"]
         }
       },
       {
@@ -446,10 +482,10 @@
       true
     ],
     [
-      "$in - array pass 3",
+      "$isIn - array pass 3",
       {
         "tags": {
-          "$in": ["a", "b"]
+          "$isIn": ["a", "b"]
         }
       },
       {
@@ -458,10 +494,10 @@
       true
     ],
     [
-      "$in - array fail 1",
+      "$isIn - array fail 1",
       {
         "tags": {
-          "$in": ["a", "b"]
+          "$isIn": ["a", "b"]
         }
       },
       {
@@ -470,10 +506,10 @@
       false
     ],
     [
-      "$in - array fail 2",
+      "$isIn - array fail 2",
       {
         "tags": {
-          "$in": ["a", "b"]
+          "$isIn": ["a", "b"]
         }
       },
       {
@@ -609,7 +645,7 @@
       "missing attribute - fail",
       {
         "pets.dog.name": {
-          "$in": ["fido"]
+          "$isIn": ["fido"]
         }
       },
       {
@@ -1258,7 +1294,7 @@
       {
         "tags": {
           "$elemMatch": {
-            "$in": ["a", "b"]
+            "$isIn": ["a", "b"]
           }
         }
       },
@@ -1272,7 +1308,7 @@
       {
         "tags": {
           "$elemMatch": {
-            "$in": ["a", "b"]
+            "$isIn": ["a", "b"]
           }
         }
       },
@@ -3210,7 +3246,7 @@
               {
                 "force": 1,
                 "condition": {
-                  "country": { "$in": ["US", "CA"] },
+                  "country": { "$isIn": ["US", "CA"] },
                   "browser": "firefox"
                 }
               }
@@ -3240,7 +3276,7 @@
               {
                 "force": 1,
                 "condition": {
-                  "country": { "$in": ["US", "CA"] },
+                  "country": { "$isIn": ["US", "CA"] },
                   "browser": "firefox"
                 }
               }
@@ -4085,7 +4121,7 @@
                 "force": "red"
               },
               {
-                "condition": { "country": { "$in": ["USA", "Mexico"] } },
+                "condition": { "country": { "$isIn": ["USA", "Mexico"] } },
                 "force": "green"
               }
             ]
@@ -4172,7 +4208,7 @@
                 "force": "red"
               },
               {
-                "condition": { "country": { "$in": ["USA", "Mexico"] } },
+                "condition": { "country": { "$isIn": ["USA", "Mexico"] } },
                 "force": "green"
               }
             ]
@@ -4222,7 +4258,7 @@
                 "force": "red"
               },
               {
-                "condition": { "country": { "$in": ["USA", "Mexico"] } },
+                "condition": { "country": { "$isIn": ["USA", "Mexico"] } },
                 "force": "green"
               }
             ]
@@ -4299,7 +4335,7 @@
                 "force": "red"
               },
               {
-                "condition": { "country": { "$in": ["USA", "Mexico"] } },
+                "condition": { "country": { "$isIn": ["USA", "Mexico"] } },
                 "force": "green"
               }
             ]
@@ -6055,3 +6091,4 @@
     ]
   ]
 }
+""".trimIndent()

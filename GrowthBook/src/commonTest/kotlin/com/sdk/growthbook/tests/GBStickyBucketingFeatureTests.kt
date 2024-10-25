@@ -1,26 +1,26 @@
 package com.sdk.growthbook.tests
 
-import com.sdk.growthbook.utils.toHashMap
 import com.sdk.growthbook.evaluators.GBFeatureEvaluator
 import com.sdk.growthbook.model.GBContext
 import com.sdk.growthbook.stickybucket.GBStickyBucketServiceImp
 import com.sdk.growthbook.utils.GBStickyAssignmentsDocument
 import com.sdk.growthbook.utils.GBStickyAttributeKey
+import com.sdk.growthbook.utils.toHashMap
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertTrue
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import org.junit.Before
-import org.junit.Test
-import kotlin.test.assertTrue
 
 class GBStickyBucketingFeatureTests {
     private lateinit var evalConditions: JsonArray
     private lateinit var service: GBStickyBucketServiceImp
 
-    @Before
+    @BeforeTest
     fun setUp() {
         evalConditions = GBTestHelper.getStickyBucketingData()
         service = GBStickyBucketServiceImp()
@@ -111,39 +111,39 @@ class GBStickyBucketingFeatureTests {
                 }
                 println(
                     "ACTUAL RESULT: 1) ${actualExperimentResult?.bucket ?: "No bucket"}; " +
-                        "2) ${actualExperimentResult?.hashAttribute ?: "No hasAttribute"}; " +
-                        "3) ${actualExperimentResult?.hashValue ?: "No hashValue"}; " +
-                        "4) ${actualExperimentResult?.inExperiment ?: "No in experiment"}; " +
-                        "5) ${actualExperimentResult?.key ?: "No key"}; " +
-                        "6) ${
-                            actualExperimentResult?.stickyBucketUsed ?: "No stickybucketUsed"
-                        }; " +
-                        "7) ${actualExperimentResult?.value ?: "No value"}; " +
-                        "8) ${actualExperimentResult?.variationId ?: "No variationId"} " +
-                        "9) ${actualExperimentResult?.featureId} END"
+                            "2) ${actualExperimentResult?.hashAttribute ?: "No hasAttribute"}; " +
+                            "3) ${actualExperimentResult?.hashValue ?: "No hashValue"}; " +
+                            "4) ${actualExperimentResult?.inExperiment ?: "No in experiment"}; " +
+                            "5) ${actualExperimentResult?.key ?: "No key"}; " +
+                            "6) ${
+                                actualExperimentResult?.stickyBucketUsed ?: "No stickybucketUsed"
+                            }; " +
+                            "7) ${actualExperimentResult?.value ?: "No value"}; " +
+                            "8) ${actualExperimentResult?.variationId ?: "No variationId"} " +
+                            "9) ${actualExperimentResult?.featureId} END"
                 )
 
                 println(
                     "EXPECTED RESULT: 1) ${expectedExperimentResult?.bucket ?: "No bucket"}; " +
-                        "2) ${expectedExperimentResult?.hashAttribute ?: "No hasAttribute"}; " +
-                        "3) ${expectedExperimentResult?.hashValue ?: "No hashValue"}; " +
-                        "4) ${expectedExperimentResult?.inExperiment ?: "No in experiment"}; " +
-                        "5) ${expectedExperimentResult?.key ?: "No key"}; " +
-                        "6) ${
-                            expectedExperimentResult?.stickyBucketUsed ?: "No stickybucketUsed"
-                        }; " +
-                        "7) ${expectedExperimentResult?.value ?: "No value"}; " +
-                        "8) ${expectedExperimentResult?.variationId ?: "No variationId"} " +
-                        "9) ${expectedExperimentResult?.featureId} END"
+                            "2) ${expectedExperimentResult?.hashAttribute ?: "No hasAttribute"}; " +
+                            "3) ${expectedExperimentResult?.hashValue ?: "No hashValue"}; " +
+                            "4) ${expectedExperimentResult?.inExperiment ?: "No in experiment"}; " +
+                            "5) ${expectedExperimentResult?.key ?: "No key"}; " +
+                            "6) ${
+                                expectedExperimentResult?.stickyBucketUsed ?: "No stickybucketUsed"
+                            }; " +
+                            "7) ${expectedExperimentResult?.value ?: "No value"}; " +
+                            "8) ${expectedExperimentResult?.variationId ?: "No variationId"} " +
+                            "9) ${expectedExperimentResult?.featureId} END"
                 )
 
 
                 println()
                 val status =
                     item[0].toString() +
-                        "\nExpected Result - " + item[4] + " & " + expectedStickyAssignmentDocs + "\n\n" +
-                        "\nActual result - " + actualExperimentResult.toString() + " & " +
-                        gbContext.stickyBucketAssignmentDocs + "\n\n"
+                            "\nExpected Result - " + item[4] + " & " + expectedStickyAssignmentDocs + "\n\n" +
+                            "\nActual result - " + actualExperimentResult.toString() + " & " +
+                            gbContext.stickyBucketAssignmentDocs + "\n\n"
 
                 if (
                     expectedExperimentResult?.value == actualExperimentResult?.value

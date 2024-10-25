@@ -1,7 +1,8 @@
 package com.sdk.growthbook.tests
 
-import com.sdk.growthbook.utils.GBFeatures
+import com.sdk.growthbook.casesJson
 import com.sdk.growthbook.model.GBExperiment
+import com.sdk.growthbook.utils.GBFeatures
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -9,24 +10,15 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
-import java.io.File
 
 class GBTestHelper {
 
     companion object {
 
         val jsonParser = Json { ignoreUnknownKeys = true }
-        private val testData: JsonObject
-
-        init {
-            val usrDir = System.getProperty("user.dir")
-            val pathToFile = "$usrDir/src/jvmTest/kotlin/com/sdk/growthbook/tests/cases.json"
-            val casesJsonFile = File(pathToFile)
-
-            testData = jsonParser.decodeFromString(
-                JsonObject.serializer(), casesJsonFile.readText()
-            )
-        }
+        private val testData: JsonObject = jsonParser.decodeFromString(
+            JsonObject.serializer(), casesJson
+        )
 
         fun getEvalConditionData(): JsonArray {
             val array = testData.jsonObject["evalCondition"] as JsonArray

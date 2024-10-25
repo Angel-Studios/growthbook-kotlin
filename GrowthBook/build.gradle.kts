@@ -19,7 +19,6 @@ kotlin {
     }
 
     js {
-        yarn.lockFileDirectory = file("kotlin-js-store")
         browser {
             commonWebpackConfig {
                 output = KotlinWebpackOutput(
@@ -27,6 +26,9 @@ kotlin {
                     libraryTarget = KotlinWebpackOutput.Target.UMD,
                     globalObject = KotlinWebpackOutput.Target.WINDOW
                 )
+            }
+            testTask {
+                useMocha()
             }
         }
     }
@@ -55,6 +57,7 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
                 implementation(libs.kotlin.serialization.json)
                 implementation(libs.ktor.json)
+                implementation(libs.annotations)
             }
         }
         val androidMain by getting {
@@ -66,12 +69,10 @@ kotlin {
         val androidUnitTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation(libs.junit)
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+                implementation(libs.kotlin.coroutines.test)
                 implementation(libs.ktor.client.mock)
             }
         }
-
         val jvmMain by getting {
             dependencies {
                 implementation(libs.ktor.client.java)
@@ -80,12 +81,21 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test-junit")
+                implementation(kotlin("test-junit"))
             }
         }
-
+        val jsMain by getting {
+            dependencies {
+                implementation(libs.ktor.client)
+                implementation(libs.krypto.js)
+            }
+        }
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test-js"))
+            }
+        }
     }
-
 }
 
 android {

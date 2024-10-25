@@ -1,14 +1,14 @@
 package com.sdk.growthbook.tests
 
-import com.sdk.growthbook.utils.toHashMap
 import com.sdk.growthbook.evaluators.GBExperimentEvaluator
 import com.sdk.growthbook.model.GBContext
 import com.sdk.growthbook.model.GBExperiment
-import kotlinx.serialization.json.JsonArray
-import kotlinx.serialization.json.jsonObject
+import com.sdk.growthbook.utils.toHashMap
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.jsonObject
 
 class GBExperimentRunTests {
 
@@ -64,8 +64,8 @@ class GBExperimentRunTests {
 
                 val status =
                     item[0].toString() + "\nExpected Result - " + item[3] + " & " + item[4] +
-                        "\nActual result - " + result.value.toString() + " & " +
-                        result.inExperiment + "\n\n"
+                            "\nActual result - " + result.value.toString() + " & " +
+                            result.inExperiment + "\n\n"
 
                 if (item[3].toString() == result.value.toString()
                     && item[4].toString() == result.inExperiment.toString()

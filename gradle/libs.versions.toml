@@ -5,26 +5,17 @@ android-minSdk = "21"
 android-gradlePlugin = "8.5.2"
 android-startup = "1.1.1"
 android-targetSdk = "34"
-
 bignum = "0.3.9"
-
 dokka = "1.8.10"
-
-junit = "4.13.2"
-
 jvmTarget = "1.8"
-
 kotlin = "1.9.24"
 kotlin-coroutines = "1.8.1"
 kotlin-serialization = "1.3.3"
-
 krypto = "2.7.0"
-
 ktor = "2.1.2"
-
 kover = "0.5.0"
-
 okhttp = "4.9.2"
+annotations = "25.0.0"
 
 [libraries]
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "android-startup" }
@@ -34,15 +25,15 @@ bignum = { module = "com.ionspin.kotlin:bignum", version.ref = "bignum" }
 gradle-android = { module = "com.android.tools.build:gradle", version.ref = "android-gradlePlugin" }
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
-junit = { module = "junit:junit", version.ref = "junit" }
-
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+kotlin-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutines" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 
 krypto = { module = "com.soywiz.korlibs.krypto:krypto", version.ref = "krypto" }
 krypto-android = { module = "com.soywiz.korlibs.krypto:krypto-android", version.ref = "krypto" }
 krypto-jvm = { module = "com.soywiz.korlibs.krypto:krypto-jvm", version.ref = "krypto" }
+krypto-js = { module = "com.soywiz.korlibs.krypto:krypto-js", version.ref = "krypto" }
 
 ktor-client = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
@@ -53,6 +44,8 @@ ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = 
 
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-sse = { module = "com.squareup.okhttp3:okhttp-sse", version.ref = "okhttp" }
+
+annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
 
 [bundles]
 
