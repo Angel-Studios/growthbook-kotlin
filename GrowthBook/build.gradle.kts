@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "io.growthbook.sdk"
-version = "1.1.61"
+version = "1.1.62"
 
 kotlin {
     androidTarget {
@@ -38,6 +38,10 @@ kotlin {
             kotlinOptions.jvmTarget = libs.versions.jvmTarget.get()
         }
     }
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
         val commonMain by getting {
